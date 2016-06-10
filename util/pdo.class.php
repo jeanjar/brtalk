@@ -13,9 +13,9 @@
 class PDOConnection extends PDO 
 {
     private $host = 'localhost';
-    private $database = 'bt_brtalk';
-    private $user = 'root';
-    private $password = 'root';
+    private $database = 'brtalk';
+    private $user = 'brtalk';
+    private $password = '123456';
     private $charset = 'utf8';
     private $persistent = false;
 
