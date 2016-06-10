@@ -38,7 +38,8 @@ class Template{
     }
 	
     public function scriptName(){
-        $page = end(explode('/', $_SERVER['PHP_SELF']));
+        $ex = explode('/', $_SERVER['PHP_SELF']);
+        $page = end($ex);
         return str_replace('.php','.html', $page);
     }
 	
