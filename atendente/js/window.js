@@ -165,6 +165,7 @@ function ChatWindow(id){
                         break;
                         case 2:
                             parent.startCall(2);	
+                            parent.getHistoryCall(data.user_id);	
                         break;
                         case 4:
                             $(parent.layoutInfo).text('Atendimento já iniciado');
@@ -180,6 +181,41 @@ function ChatWindow(id){
         });
 
         return this;
+    }
+
+    this.getHistoryCall = function(user_id){
+
+        parent.callStarted = true;
+
+        $(parent.layoutInfo).text('Atendimento em andamento');
+        $(parent.input).show();
+        $(parent.layoutInput).css('backgroundColor', '#FFF');
+
+        $.ajax({
+            url: 'history_message.php',
+            type: 'POST',
+            data: ({client_id : parent.id, user_id : user_id}),
+            timeout : 15000,
+            success: function(data){
+                $.each(data.messages, function(i, item) {
+                    var classe = (parseInt(item.type) == 0) ? 'talk_user' : 'talk_client';
+                    var name = (parseInt(item.type) == 0) ? item.user_name : item.client_name;
+                    
+                    var content = '<p class="'+classe+'">'+name+'</p><p>'+item.message+'</p>';
+                    
+                    $('#j'+parent.id+' div .talk').append( content );
+                });
+                
+                $('#j'+parent.id+' div').animate({
+                    scrollTop: 200000
+                }, 500);
+                
+            },
+            error: function(XMLHttpRequest){
+                $(parent.layoutInfo).text('Falha ao retomar o atendimento, tente novamente');
+            }
+        });
+
     }
 
     this.startCall = function(status){
@@ -908,8 +944,8 @@ function About(){
     var html = new Array();
     html.push('<div class="about">');
     html.push('<h2>' +_info.name + ' - ' +_info.version+ '</h2>');
-    html.push('<p><i class="fa fa-user"></i>' +_info.author + '<br/><a href="mailto:' +_info.email + '?Subject=brTalk"><i class="fa fa-envelope"></i> ' +_info.email + '</a></p>');
     html.push('<p><i class="fa fa-user"></i>' +_info.author2 + '<br/><a href="mailto:' +_info.email2 + '?Subject=brTalk"><i class="fa fa-envelope"></i> ' +_info.email2 + '</a></p>');
+    html.push('<p><i class="fa fa-user"></i>' +_info.author + '<br/><a href="mailto:' +_info.email + '?Subject=brTalk"><i class="fa fa-envelope"></i> ' +_info.email + '</a></p>');
     html.push('<ul>');
     html.push('<li>Mantenha os créditos <i class="fa fa-heart"></i> sempre, por favor <i class="fa fa-smile-o"></i></li>');
     html.push('<li>Críticas, sugestões, relatar bugs e qualquer tipo de ajuda sempre serão bem vindas</li>');

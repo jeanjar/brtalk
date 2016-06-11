@@ -13,7 +13,7 @@
  * @url     http://andrewebdeveloper.github.io/brtalk/
  */
 var _config = {
-    windowTitle : 'brTalk',
+    windowTitle : 'brTalk - Atendimento',
     initialMessage : 'Olá sr(a) {NAME}. Seja bem vindo(a), em que posso lhe ajudar ?'
 };
 

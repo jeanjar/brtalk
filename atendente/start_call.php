@@ -42,7 +42,7 @@ switch((int) $client['status']){
 	
 }
 
-$json = array('call_status' => $call_status);
+$json = array('call_status' => $call_status, 'user_id' => (int)$user['user_id']);
 
 print json_encode($json);
 ?>
